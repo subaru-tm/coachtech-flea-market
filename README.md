@@ -46,6 +46,8 @@
     - Category.php
     - 2025_05_25_140000_create_categories_table.php
       - (マイグレーションファイルの時刻部分をリネーム済）
+     
+- php artisan key:generate
 
 - シンボリックリンク作成
   - php artisan storage:link
