@@ -54,3 +54,7 @@
     - (実行後のメッセージ）
       The [/var/www/public/storage] link has been connected to [/var/www/storage/app/public].
       The links have been created.
+
+- マイグレーション・シーダーの実行
+  - php artisan migrate
+  - php artisan db:seed
