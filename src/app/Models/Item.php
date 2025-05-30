@@ -27,4 +27,21 @@ class Item extends Model
         return $this->belongsToMany(Category::class, 'item_category', 'item_id', 'category_id',);
     }
 
+    public function scopeKeywordSearch($query, $keyword) {
+        if (!empty($keyword)) {
+            $query->where('name', 'like', '%'.$keyword.'%');
+        }
+    }
+
+    public function scopeExcludeMySelling($query, $user_id) {
+        if (!empty($user_id)) {
+            $query->where('user_id', '<>',  $user_id);
+        }
+    }
+
+    public function scopeMylistSearch($query, $user_id) {
+        if (!empty($user_id)) {
+            //
+        }
+    }
 }

@@ -15,4 +15,10 @@ class ItemCategory extends Model
         'item_id',
         'category_id',
     ];
+
+    public function scopeCategorySearch($query, $item_id) {
+        if (!empty($item_id)) {
+            $query->where('item_id', $item_id);
+        }
+    }
 }

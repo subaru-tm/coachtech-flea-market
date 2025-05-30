@@ -1,0 +1,240 @@
+
+.item-detail {
+    margin-top: 175px;
+    margin-bottom: 175px;
+    height: 1702px;
+    display: flex;
+
+    @media screen and (max-width: 1540px) {
+
+        .item-detail {
+            margin-left: 66px;
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 850px) {
+        .item-detail {
+            margin-left: 34px;
+            width: 100%;
+        }
+    }
+}
+
+.item-image-area {
+    height: 100%;
+    @media screen and (max-width: 1540px) {
+        width: 660px;
+    }
+    @media screen and (max-width: 850px) {
+        width: 360px;
+    }
+}
+
+.item-image-area img {
+    margin-top: 36px;
+    @media screen and (max-width: 1540px) {
+        margin-left: 24px;
+        width: 600px;
+        height: 600px;
+    }
+
+    @media screen and (max-width: 850px) {
+        margin-left: 18px;
+        width: 330px;
+        height: 330px;
+    }
+}
+
+.item-description-area {
+    padding: 0 0 0 64px;
+    height: 100%;
+    
+    @media screen and (max-width: 1540px) {
+        width: 660px;
+    }
+
+    @media screen and (max-width: 850px) {
+        width: 360px;
+    }
+}
+
+.item__name {
+    margin: 8px 0;
+    font-size: 45px;
+    font-weight: 700;
+}
+
+.item__brand {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.item__price {
+    margin-top: 8px;
+}
+
+.item__price-unit {
+    font-size: 30px;
+}
+
+.item__price-price {
+    font-size: 45px;
+}
+
+.nice-comment__area {
+    margin-top: 24px;
+    display: flex;
+}
+
+.nice-group {
+    margin-left: 56px;
+    width: 48px;
+}
+
+.nice-form button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.nice-counter {
+    width: 100%;
+    text-align: center;
+}
+
+.comment-group {
+    margin-left: 56px;
+    width: 48px;
+}
+
+.comment-counter {
+    width: 100%;
+    text-align: center;
+}
+
+
+.item__purchase-procedure {
+    margin-top: 16px;
+    padding: 4px;
+    width: 570px;
+    height: 56px;
+    background: #FF5555;
+    text-align: center;
+    width: 100%;
+}
+
+.item__purchase-procedure--link {
+    display: inline-block;
+    width: 100%;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: 700px;
+    color: #FFFFFF;
+}
+
+.item__description-section {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.item__description-section--comment {
+    font-size: 36px;
+    font-weight: 700;
+    color: #5F5F5F;
+}
+
+.item__category {
+    display: flex;
+    align-items: center;
+}
+
+.item__field-header {
+    margin: 8px 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.item__category-tag {
+    margin-left: 24px;
+    padding: 2px;
+    width: 80px;
+    height: 24px;
+    background: #D9D9D9;
+    border: none;
+    border-radius: 15px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.item__condition {
+    display: flex;
+    align-items: center;
+}
+
+.item__condition-content {
+    margin-left: 24px;
+    width: 50%;
+    height: 24px;
+    text-align: center;
+}
+
+.item__comment-form--header {
+    margin: 8px 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.reference-user__info {
+    display: flex;
+}
+
+.reference-user__info img {
+    border-radius: 35px;
+    align-items: center;
+}
+
+.reference-user__info-name {
+    margin-left: 18px;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.reference-comment__content {
+    margin-top: 18px;
+    padding: 8px 8px;
+    width: 100%;
+    height: 70px;
+    background: #E5E5E5;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.comment-form textarea {
+    padding: 8px 8px;
+    width: 100%;
+    height: 246px;
+    font-size: 20px;
+}
+
+.comment-form__alert {
+    padding: 8px 16px;
+    width: 100%;
+    font-size: 20px;
+    color: #FF5555;
+}
+
+.comment-form__button button {
+    margin-top: 24px;
+    padding: 4px;
+    width: 100%;
+    height: 56px;
+    background: #FF5555;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700px;
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+}

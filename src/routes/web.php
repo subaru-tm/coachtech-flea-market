@@ -7,6 +7,7 @@ use App\Http\Controllers\MailSendController;
 use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\PurchaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +28,16 @@ Route::get('/login', [AuthSessionController::class, 'login'])->name('login');
 Route::post('/login', [AuthSessionController::class, 'store']);
 Route::get('/logout', [AuthSessionController::class, 'destroy']);
 
+Route::get('/', [ItemController::class, 'index']);
+Route::get('/{keyword}', [ItemController::class, 'search']);
+
 Route::middleware('auth')->group(function () {
-    Route::get('/', [ItemController::class, 'index']);
+    Route::get('/{page}', [ItemController::class, 'mylist']);
+    Route::post('/item/:{item_id}/nice', [ItemController::class, 'nice']);
+    Route::post('/item/:{item_id}/comment', [ItemController::class, 'comment']);
+    Route::get('/purchase/:{item_id}', [PurchaseController::class, 'purchase']);
 });
+
+Route::get('/item/:{item_id}', [ItemController::class, 'detail'])->name('item.detail');
 
 Route::get('/mail', [MailSendController::class, 'index']);
