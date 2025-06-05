@@ -33,15 +33,15 @@ class Item extends Model
         }
     }
 
-    public function scopeExcludeMySelling($query, $user_id) {
+    public function scopeUserIdSearch($query, $user_id) {
         if (!empty($user_id)) {
-            $query->where('user_id', '<>',  $user_id);
+            $query->where('user_id', $user_id);
         }
     }
 
-    public function scopeMylistSearch($query, $user_id) {
+    public function scopeExcludeMySelling($query, $user_id) {
         if (!empty($user_id)) {
-            //
+            $query->where('user_id', '<>',  $user_id);
         }
     }
 }

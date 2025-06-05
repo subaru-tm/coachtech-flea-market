@@ -16,6 +16,13 @@ class Mylist extends Model
         'comment',
     ];
 
+    public function scopeMylistItemSearch($query, $user_id) {
+        if (!empty($user_id)) {
+            $query->select('item_id')->where('user_id', $user_id)->where('nice_flug', '1');
+        }
+
+    }
+
     public function getCountNiceByItemId($item_id) {
         if (!empty($item_id)) {
             $count = Mylist::where('item_id', $item_id)->where('nice_flug', '1')->count();

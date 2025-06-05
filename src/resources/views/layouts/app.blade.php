@@ -37,8 +37,8 @@
                 @else
                     <a class="header__nav-link--login" href="/login">ログイン</a>
                 @endif
-                <a class="header__nav-link--mypage" href="/mypage">マイページ</a>
-                <a class="header__nav-link--sell" href="/sell">出品</a>
+                <a class="header__nav-link--mypage" href="/mypagesell">マイページ</a>
+                <a class="header__nav-link--sell" href="/exhibition">出品</a>
             </span>
         </div>
     </header>

@@ -8,6 +8,8 @@ use App\Models\Item;
 use App\Models\Category;
 use App\Models\Mylist;
 use App\Models\User;
+use App\Models\Purchase;
+use App\Models\ItemCategory;
 use App\Http\Requests\CommentRequest;
 
 class ItemController extends Controller
@@ -22,7 +24,19 @@ class ItemController extends Controller
             $items = Item::all();
         }
 
-        return view('index', compact('items'));
+        $purchases = Purchase::CommitedPurchase()->get();
+
+        return view('index', compact('items', 'purchases'));
+    }
+
+    public function mylist() {
+        $user_id = Auth::id();
+        $mylist_items_id = Mylist::MylistItemSearch($user_id)->get();
+        $items = Item::whereIn('id', $mylist_items_id)->get();
+
+        $purchases = Purchase::CommitedPurchase()->get();
+
+        return view('index', compact('items', 'purchases'));
     }
 
     public function search(Request $request) {
@@ -31,15 +45,7 @@ class ItemController extends Controller
         return view('index', compact('items', 'keyword'));
     }
 
-    public function mylist() {
-        $user_id = Auth::id();
-        $items = Item::MylistSearch($user_id)->get();
-
-        return view('index', compact('items'));
-    }
-
-
-    // 以降、商品詳細画面で使用するアクション
+    // 商品詳細画面で使用するアクション（view表示、いいねの追加／取り消し、コメント参照・送信）
 
     public function detail($item_id) {
         $item = Item::with('categories')->find($item_id);
@@ -92,10 +98,10 @@ class ItemController extends Controller
                 $mylist = Mylist::getMylistItem($user_id, $item_id)->update(['nice_flug' => '1']);
 
             }
-
-            return redirect(route('item.detail',['item_id' => $item_id ]));
-
         }
+
+        return redirect(route('item.detail',['item_id' => $item_id ]));
+
     }
 
     public function comment(CommentRequest $request, $item_id) {
@@ -117,5 +123,50 @@ class ItemController extends Controller
         }
 
         return redirect(route('item.detail',['item_id' => $item_id ]))->with(compact('mylist'));
+    }
+
+    //商品出品のアクション（view表示とitemsテーブルへのinsert）
+    public function create() {
+
+        $categories = Category::all();
+
+        return view('exhibition', compact('categories'));
+    }
+
+    public function store(Request $request)
+    {
+        $user_id = Auth::id();
+        $price = str_replace('¥', '', $request->price);
+
+        $file = $request->file('img-file');
+        $originalName = $file->getClientOriginalName();
+        $file->storeAs('public/', $originalName);
+
+        $image_path = 'storage/' . $originalName;
+
+
+        $item = Item::create([
+            'user_id' => $user_id,
+            'name' => $request->name,
+            'brand' => $request->brand,
+            'condition' => $request->condition,
+            'description' => $request->description,
+            'price' => $price,
+            'image' => $image_path,
+        ]);
+
+        $new_item_id = $item->id;
+
+        $categories = $request->category;
+
+        foreach( $categories as $category ) {
+            $item_category = ItemCategory::create([
+                'item_id' => $new_item_id,
+                'category_id' => $category,
+            ]);
+        }
+        // 出品結果が直ぐに確認できるように、マイページへリダイレクト。
+        // （補足：商品一覧へのリダイレクトも実装したが、ログイン中だと自身の出品が見れないため）
+        return redirect('mypagesell');
     }
 }

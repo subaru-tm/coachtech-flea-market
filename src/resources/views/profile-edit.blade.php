@@ -9,27 +9,38 @@
     <div class="content-inner">
         <h2 class="content-heading">プロフィール設定</h2>
         <div class="content-input">
-            <form class="input-form" action="/mypage/profile/update" method="post">
+            <form class="input-form" action="/mypage/profile/update" method="post" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
-                <div class="input-form__group">
-                    <label class="input-form__group-label"></label>
-                    <input class="input-form__group-file--button" type="file" name="img_file"/>
+                <div class="user-image">
+                    <img src="{{ asset($user->image) }}" alt="" width="150" height="150" id="img-view"/> 
+                    <label for="file_upload">画像を選択する</label>
+                    <input class="user-image__file--button" type="file" name="img_file" id="file_upload" />
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script>
+                        $('#file_upload').on('change', function() {
+                            var $fr = new FileReader();
+                            $fr.onload = function() {
+                                $('#img-view').attr('src', $fr.result);
+                            }
+                            $fr.readAsDataURL(this.files[0]);
+                        });
+                    </script>
                 </div>
                 <div class="input-form__group">
-                    <label class="input-form__group-label">ユーザー名</label>
+                    <div class="input-form__group-label">ユーザー名</div>
                     <input class="input-form__group-text" type="text" name="name" value="{{ $user['name'] }}" />
                 </div>
                 <div class="input-form__group">
-                    <label class="input-form__group-label">郵便番号</label>
+                    <div class="input-form__group-label">郵便番号</div>
                     <input class="input-form__group-text" type="text" name="post_code" value="{{ $user['post_code'] }}" />
                 </div>
                 <div class="input-form__group">
-                    <label class="input-form__group-label">住所</label>
+                    <div class="input-form__group-label">住所</div>
                     <input class="input-form__group-text" type="text" name="address" value="{{ $user['address'] }}" />
                 </div>
                 <div class="input-form__group">
-                    <label class="input-form__group-label">建物名</label>
+                    <div class="input-form__group-label">建物名</div>
                     <input class="input-form__group-text" type="text" name="building" value="{{ $user['building'] }}" />
                 </div>
                 <div class="input-form__button">

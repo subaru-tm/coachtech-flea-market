@@ -7,7 +7,7 @@
 @section('content')
 <div class="item-detail">
     <div class="item-image-area">
-        <img src="{{ asset($item->image) }}" alt="" />
+        <img src="{{ asset($item->image) }}" alt="" width="600" height="600" />
     </div>
 
     <div class="item-description-area">
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="item__purchase-procedure">
-            <a   class="item__purchase-procedure--link" href="/purchase/:{$item['id']}">購入手続きへ</a>
+            <a   class="item__purchase-procedure--link" href="/purchase/:{{ $item['id'] }}">購入手続きへ</a>
         </div>
 
         <h2  class="item__description-section">商品説明</h2>

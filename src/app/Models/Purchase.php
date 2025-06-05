@@ -17,4 +17,25 @@ class Purchase extends Model
         'shipping_address',
         'shipping_building',
     ];
+
+    public function scopePurchaseSearch($query, $user_id, $item_id) {
+
+        $query->where('user_id', $user_id)->where('item_id', $item_id);
+
+        return $query;
+
+    }
+
+    public function scopeCommitedPurchase($query) {
+
+        $query->where('payment_method', '<>' , 'null');
+
+        return $query;
+    }
+
+    public function scopeUserIdSearch($query, $user_id) {
+        if (!empty($user_id)) {
+            $query->where('user_id', $user_id);
+        }
+    }
 }
