@@ -47,7 +47,8 @@
     - 2025_05_25_140000_create_categories_table.php
       - (マイグレーションファイルの時刻部分をリネーム済）
      
-- php artisan key:generate
+- キーを生成
+  - php artisan key:generate
 
 - シンボリックリンク作成
   - php artisan storage:link
@@ -58,3 +59,6 @@
 - マイグレーション・シーダーの実行
   - php artisan migrate
   - php artisan db:seed
+ 
+- テストコード作成用にduskをインストール
+  - composer require laravel/dusk --dev 
