@@ -60,5 +60,13 @@
   - php artisan migrate
   - php artisan db:seed
  
-- テストコード作成用にduskをインストール
-  - composer require laravel/dusk --dev 
+- テストコード作成用にduskをインストール（【参考】Qiitaのこちらの手順を実行：https://qiita.com/koi-ken/items/6b435f778a2208155f95）
+  - composer require laravel/dusk --dev
+  - ChromeDriverをインストールするため、cacert.pem(↓↓のurl)をダウンロードして、cドライブ直下にpemというディレクトリを作成して格納。
+    - http://curl.haxx.se/ca/cacert.pem
+  - php.iniに下記を追記。
+    - curl.cainfo=C:\pem\cacert.pem
+  - php artisan dusk:install
+  - 各機能ごとにduskファイルを作成（テストケース一覧のD列（各機能）単位で作成）
+    - php artisan dusk:make RegisterTest
+    - 
