@@ -68,6 +68,10 @@
   - php.iniに下記を追記。
     - curl.cainfo=C:\pem\cacert.pem
   - php artisan dusk:install
+  - Chromeを最新版にアップデートして下記のコマンドを実行
+    - php artisan dusk:chrome-driver 137.0.7151.69
+    - 実行後"ErrorException"が発生（次がそのメッセージ）。一旦無視して継続。
+      - file_get_contents(https://chromedriver.storage.googleapis.com/137.0.7151.69/chromedriver_linux64.zip): failed to open stream: HTTP request failed! HTTP/1.0 404 Not Found
   - 各機能ごとにduskファイルを作成（テストケース一覧のD列（各機能）単位で作成）
     - php artisan dusk:make RegisterTest
     - 
