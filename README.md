@@ -79,11 +79,18 @@
   - テストコード作成: php artisan make:test [テストコード名](下記参照)
   - テストコード実行: php artisan test
   - 各機能に対するテストコード名（~/src/tests/Unit/配下に格納。IDは「テストケース一覧」を引用）
-    - ID: 1 会員登録機能　=> RegisterTest
-    - ID: 2 ログイン機能  => LoginTest
-    - ID: 3 ログアウト機能=> LogoutTest
-    - ID: 4 商品一覧取得  => IndexTest
+    - ID: 1 会員登録機能　　　 => RegisterTest
+    - ID: 2 ログイン機能　　　 => LoginTest
+    - ID: 3 ログアウト機能　　 => LogoutTest
+    - ID: 4 商品一覧取得　　　 => IndexTest
     - ID: 5 マイリスト一覧取得 => MylistTest
-    - ID: 6 商品検索機能  => ItemSearchTest
-    - ID: 7 商品詳細情報取得 => ItemDetailGetTest
-    - ID: 8 いいね機能　  => NiceFunctionTest
+    - ID: 6 商品検索機能　　　 => ItemSearchTest
+    - ID: 7 商品詳細情報取得　 => ItemDetailGetTest
+    - ID: 8 いいね機能　　　　 => NiceFunctionTest
+    - ID: 9 コメント送信機能　 => CommentSendTest
+    - ID:10 商品購入機能　　　 => PurchaseTest
+    - ID:11 支払い方法選択機能 => PaymentMethodSellectTest
+    - ID:12 配送先変更機能　　 => AddressEditTest
+    - ID:13 ユーザー情報取得　 => ProfileGetTest
+    - ID:14 ユーザー情報変更　 => ProfileEditTest
+    - ID:15 出品商品情報登録　 => ExhibitionTest
