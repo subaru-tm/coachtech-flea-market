@@ -74,4 +74,16 @@
       - file_get_contents(https://chromedriver.storage.googleapis.com/137.0.7151.69/chromedriver_linux64.zip): failed to open stream: HTTP request failed! HTTP/1.0 404 Not Found
   - 各機能ごとにduskファイルを作成（テストケース一覧のD列（各機能）単位で作成）
     - php artisan dusk:make RegisterTest
-    - 
+   
+- テストコード
+  - テストコード作成: php artisan make:test [テストコード名](下記参照)
+  - テストコード実行: php artisan test
+  - 各機能に対するテストコード名（~/src/tests/Unit/配下に格納。IDは「テストケース一覧」を引用）
+    - ID: 1 会員登録機能　=> RegisterTest
+    - ID: 2 ログイン機能  => LoginTest
+    - ID: 3 ログアウト機能=> LogoutTest
+    - ID: 4 商品一覧取得  => IndexTest
+    - ID: 5 マイリスト一覧取得 => MylistTest
+    - ID: 6 商品検索機能  => ItemSearchTest
+    - ID: 7 商品詳細情報取得 => ItemDetailGetTest
+    - ID: 8 いいね機能　  => NiceFunctionTest
