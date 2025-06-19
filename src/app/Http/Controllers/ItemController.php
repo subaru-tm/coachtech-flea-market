@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Mylist;
@@ -11,10 +12,11 @@ use App\Models\User;
 use App\Models\Purchase;
 use App\Models\ItemCategory;
 use App\Http\Requests\CommentRequest;
+use App\Http\Requests\ExhibitionRequest;
 
 class ItemController extends Controller
 {
-    // 商品一覧画面で使用するアクション
+  // 商品一覧画面で使用するアクション
 
     public function index() {
         if (Auth::check()) {
@@ -30,22 +32,73 @@ class ItemController extends Controller
     }
 
     public function mylist() {
-        $user_id = Auth::id();
-        $mylist_items_id = Mylist::MylistItemSearch($user_id)->get();
-        $items = Item::whereIn('id', $mylist_items_id)->get();
+        if (Auth::check()) {
+            $user_id = Auth::id();
+            $mylist_items_id = Mylist::MylistItemSearch($user_id)->get();
+            $items = Item::whereIn('id', $mylist_items_id)->get();
 
-        $purchases = Purchase::CommitedPurchase()->get();
+            // purchasesテーブルは、配送先の選択中など、購入完了前でも一時的に
+            // DBに値が挿入されている可能性がある。このため購入完了のみを抽出。
+            $purchases = Purchase::CommitedPurchase()->get();
 
-        return view('index', compact('items', 'purchases'));
+            return view('index', compact('items', 'purchases'));
+
+        } else {
+            //未認証の場合は何も返さない
+            return view('index');
+        }
     }
 
-    public function search(Request $request) {
-        $keyword = $request->input('keyword');
+      //ヘッダのkeyword検索されたのと同時にマイリスト表示する場合
+    public function mylistAndKeyword(Request $request, $keyword = null) {
+
+        if ($keyword) {
+            if( $keyword == "{keyword}") {
+                $keyword = $request->input('keyword');
+            } else {
+                $keyword = $keyword;
+            }
+        } else {
+            $keyword = $request->input('keyword');
+        }
+
+        if (Auth::check()) {
+            $user_id = Auth::id();
+            $mylist_items_id = Mylist::MylistItemSearch($user_id)->get();
+
+            $items = Item::KeywordSearch($keyword)->whereIn('id', $mylist_items_id)->get();
+
+            $purchases = Purchase::CommitedPurchase()->get();
+
+            return view('index', compact('items', 'keyword', 'purchases'));
+
+        } else {
+            //未認証の場合は何も返さない
+            return view('index');
+        }
+    }
+
+    public function search(Request $request, $keyword = null) {
+
+        if ($keyword) {
+            if( $keyword == "{keyword}") {
+                $keyword = $request->input('keyword');
+            } else {
+                $keyword = $keyword;
+            }
+        } else {
+            $keyword = $request->input('keyword');
+
+        }
+        
         $items = Item::KeywordSearch($keyword)->get();
-        return view('index', compact('items', 'keyword'));
+        $purchases = Purchase::all();
+
+        return view('index', compact('items', 'keyword', 'purchases'));
     }
 
-    // 商品詳細画面で使用するアクション（view表示、いいねの追加／取り消し、コメント参照・送信）
+
+  // 商品詳細画面で使用するアクション（view表示、いいねの追加／取り消し、コメント参照・送信）
 
     public function detail($item_id) {
         $item = Item::with('categories')->find($item_id);
@@ -60,7 +113,7 @@ class ItemController extends Controller
             $comment_user_id = $other_comment->user_id;
             $comment_user = User::find($comment_user_id);
         }
-        //ログイン済であれば該当ユーザーのmylist_item（該当商品のいいね、コメント）を取得し、viewに渡す。
+        //ログイン済であれば該当ユーザーのmylist_item(該当商品のいいね、コメント)を取得しviewに渡す
         if (Auth::check()) {
             $user_id = Auth::id();
             $mylist_item = Mylist::getMylistItem($user_id, $item_id);
@@ -68,7 +121,7 @@ class ItemController extends Controller
             return view('item-detail', compact('item', 'categories', 'nice_count', 'mylist_item', 'comment_count', 'other_comment', 'comment_user'));
 
         } else {
-            //ログインしていなくても商品詳細画面を参照できるように、mylist_item以外の情報をviewに渡す。
+            //未認証でも商品詳細画面を参照できるように、mylist_item以外の情報をviewに渡す。
             return view('item-detail', compact('item', 'categories', 'nice_count', 'comment_count', 'other_comment', 'comment_user'));
 
         }
@@ -125,7 +178,7 @@ class ItemController extends Controller
         return redirect(route('item.detail',['item_id' => $item_id ]))->with(compact('mylist'));
     }
 
-    //商品出品のアクション（view表示とitemsテーブルへのinsert）
+  //商品出品のアクション（view表示とitemsテーブルへのinsert）
     public function create() {
 
         $categories = Category::all();
@@ -133,12 +186,12 @@ class ItemController extends Controller
         return view('exhibition', compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(ExhibitionRequest $request)
     {
         $user_id = Auth::id();
         $price = str_replace('¥', '', $request->price);
 
-        $file = $request->file('img-file');
+        $file = $request->file('img_file');
         $originalName = $file->getClientOriginalName();
         $file->storeAs('public/', $originalName);
 
@@ -166,7 +219,7 @@ class ItemController extends Controller
             ]);
         }
         // 出品結果が直ぐに確認できるように、マイページへリダイレクト。
-        // （補足：商品一覧へのリダイレクトも実装したが、ログイン中だと自身の出品が見れないため）
+        // （補足：商品一覧へのリダイレクトだとログイン中だと自身の出品が見れないため）
         return redirect('mypagesell');
     }
 }

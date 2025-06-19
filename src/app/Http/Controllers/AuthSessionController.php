@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Pipeline;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\Actions\AttemptToAuthenticate;
 use Laravel\Fortify\Actions\CanonicalizeUsername;
 use Laravel\Fortify\Actions\EnsureLoginIsNotThrottled;
@@ -60,9 +61,16 @@ class AuthSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        return $this->loginPipeline($request)->then(function ($request) {
-            return app(LoginResponse::class);
-        });
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended(route('index'));
+        } else {
+            // ユーザー情報がDBにない場合ログインできない。
+            // フォームリクエストでの判定が難しいと考え、代わりにこちらでチェックしてメッセージを付与。
+            return redirect('/login')->withErrors(['email' => 'ログイン情報が登録されていません']);
+        }
+
     }
 
     /**
@@ -94,6 +102,7 @@ class AuthSessionController extends Controller
         ]));
     }
 
+    
     /**
      * Destroy an authenticated session.
      *

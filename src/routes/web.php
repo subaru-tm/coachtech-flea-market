@@ -20,42 +20,42 @@ use App\Http\Controllers\PurchaseController;
 |
 */
 
+Route::get('/search:{keyword?}', [ItemController::class, 'search'])->name('search');
+
 Route::get('/register', [RegisterController::class, 'create']);
 Route::post('/register', [RegisterController::class, 'store']);
 Route::get('/mypage/profile', [UserController::class, 'create']);
 Route::patch('/mypage/profile/update', [UserController::class, 'update']);
 Route::get('/login', [AuthSessionController::class, 'login'])->name('login');
 Route::post('/login', [AuthSessionController::class, 'store']);
-Route::get('/logout', [AuthSessionController::class, 'destroy']);
+Route::get('/logout', [AuthSessionController::class, 'destroy'])->name('logout');
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/mypage{tab}', [UserController::class, 'mypage']);
-    Route::get('/mypage/profile', [UserController::class, 'profile']);
-    Route::get('/mylist', [ItemController::class, 'mylist']);
+    Route::get('/mypage{tab}', [UserController::class, 'mypage'])->name('mypage');
+    Route::get('/mypage/profile', [UserController::class, 'profile'])->name('profile.edit');
     Route::get('/exhibition', [ItemController::class, 'create']);
     Route::post('/exhibition', [ItemController::class, 'store']);
 });
 
-Route::get('/', [ItemController::class, 'index'])->name('index');
+Route::get('/mylist:{keyword?}', [ItemController::class, 'mylistAndKeyword'])->name('mylist.keyword');
 
-Route::get('/{keyword}', [ItemController::class, 'search']);
+Route::get('/mylist', [ItemController::class, 'mylist'])->name('mylist');
 
-
+Route::post('/item/:{item_id}/comment', [ItemController::class, 'comment'])->name('comment');
 
 Route::middleware('auth')->group(function () {
-    Route::post('/item/:{item_id}/nice', [ItemController::class, 'nice']);
-    Route::post('/item/:{item_id}/comment', [ItemController::class, 'comment']);
+    Route::post('/item/:{item_id}/nice', [ItemController::class, 'nice'])->name('nice');
 
+    Route::post('/purchase/address/:{item_id}/update', [PurchaseController::class, 'shippingUpdate'])->name('address.update');
+    Route::get('/purchase/address/:{item_id}', [PurchaseController::class, 'editShipping']);
+    Route::post('/purchase/:{item_id}/commit', [PurchaseController::class, 'store'])->name('purchase.commit');
     Route::get('/purchase/:{item_id}', [PurchaseController::class, 'purchase'])->name('purchase');
-    Route::get('/purchase/address/:{item_id}', [PurchaseController::class, 'updateShipping']);
-    Route::post('/purchase/address/:{item_id}/update', [PurchaseController::class, 'shippingUpdate']);
-    Route::post('/purchase/:{item_id}/commit', [PurchaseController::class, 'store']);
-
     
 });
 
 Route::get('/item/:{item_id}', [ItemController::class, 'detail'])->name('item.detail');
 
-
 Route::get('/mail', [MailSendController::class, 'index']);
+
+Route::get('/', [ItemController::class, 'index'])->name('index');

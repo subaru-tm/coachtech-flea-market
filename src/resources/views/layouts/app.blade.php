@@ -17,15 +17,25 @@
                 <img src="{{ asset('storage/logo.svg') }}" alt="" />
             </a>
             <span class="header__search">
-                <form class="search-form" action="/{keyword}" method="get">
+                <form class="search-form"
+                    @if (Request::is('mylist'))
+                        action="/mylist:{keyword}"
+                    @else
+                        action="/search:{keyword}"
+                    @endif
+
+                    method="get"
+                >
                     @csrf
                     <input type="text" name="keyword" 
                         @if (isset($keyword))
                             value="{{ $keyword }}"
                         @else
+                            value="{{ old('keyword') }}"
                             placeholder="なにをお探しですか？"
                         @endif
                     />
+
                 </form>
             </span>
             <span class="header__nav">

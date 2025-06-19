@@ -42,7 +42,7 @@
         </div>
 
         <h2  class="item__description-section">商品説明</h2>
-        <div class="item__color">カラー：</div>
+        <div class="item__color">カラー：{{ $item->color }}</div>
         <div class="item__new-used"></div>
         <div class="item__description">{{ $item->description }}</div>
         <div class="item__delivery"></div>

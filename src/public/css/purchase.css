@@ -136,3 +136,9 @@
 .space__area {
     width: 5%;
 }
+
+.input-feild__alert {
+    margin-left: 24px;
+    margin-bottom: 24px;
+    color: #ff5555;
+}

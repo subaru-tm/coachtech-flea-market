@@ -16,11 +16,32 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $param =[
-            'name' => 'ファーストユーザー',
-            'email' => 'test@test.com',
-            'password' => Hash::make('testpass'),
+            'name' => 'テストユーザー１',
+            'email' => 'test1@test.com',
+            'password' => Hash::make('test1pass'),
+            'post_code' => '111-1111',
+            'address' => 'テスト１県テスト１市テスト１区１－１－１',
+            'building' => 'テスト１ビル１０１',
+            'image' => 'storage/test.png'
         ];
         DB::table('users')->insert($param);
 
+        $param =[
+            'name' => 'テストユーザー２',
+            'email' => 'test2@test.com',
+            'password' => Hash::make('test2pass'),
+            'post_code' => '222-2222',
+            'address' => 'テスト２県テスト２市テスト２区２－２－２',
+            'building' => 'テスト２ビル２０２',
+            'image' => 'storage/test2.png'
+        ];
+        DB::table('users')->insert($param);
+
+        $param =[
+            'name' => 'テストユーザー３',
+            'email' => 'test3@test.com',
+            'password' => Hash::make('test3pass'),
+        ];
+        DB::table('users')->insert($param);
     }
 }

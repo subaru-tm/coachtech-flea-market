@@ -13,14 +13,29 @@
             <div class="input-form__group">
                 <div class="input-form__label">郵便番号</div>
                 <input class="input-form__text" type="text" name="shipping_post_code" value="{{ $shipping['shipping_post_code'] }}" />
+                <div class="input-feild__alert">
+                    @error('shipping_post_code')
+                        {{ $message }}
+                    @enderror
+                </div>
             </div>
             <div class="input-form__group">
                 <div class="input-form__label">住所</div>
                 <input class="input-form__text" type="text" name="shipping_address" value="{{ $shipping['shipping_address'] }}" />
+                <div class="input-feild__alert">
+                    @error('shipping_address')
+                        {{ $message }}
+                    @enderror
+                </div>
             </div>
             <div class="input-form__group">
                 <div class="input-form__label">建物名</div>
                 <input class="input-form__text" type="text" name="shipping_building" value="{{ $shipping['shipping_building'] }}" />
+                <div class="input-feild__alert">
+                    @error('shipping_building')
+                        {{ $message }}
+                    @enderror
+                </div>
             </div>
             <div class="input-form__button">
                 <button type="submit">更新する</button>

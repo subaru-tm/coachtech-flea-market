@@ -46,7 +46,7 @@ class Mylist extends Model
 
     public function getCommentCountByItemId($item_id) {
         if (!empty($item_id)) {
-            $count = Mylist::where('item_id', $item_id)->where('comment', '<>',  'null')->count();
+            $count = Mylist::where('item_id', $item_id)->where('comment', '<>',  '')->count();
 
             return $count;
         }
@@ -54,7 +54,8 @@ class Mylist extends Model
 
     public function getCommentByItemId($item_id) {
         if (!empty($item_id)) {
-            $comment = Mylist::where('item_id', $item_id)->where('comment', '<>',  'null')->first();
+            
+            $comment = Mylist::where('item_id', $item_id)->where('comment', '<>',  '')->first();
 
             return $comment;
         }

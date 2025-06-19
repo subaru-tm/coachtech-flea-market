@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('post_code')->nullable();
             $table->string('address')->nullable();
             $table->string('building')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

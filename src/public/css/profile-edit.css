@@ -68,3 +68,9 @@
     font-size: 26px;
     color: #FFFFFF;
 }
+
+.input-feild__alert {
+    margin-left: 24px;
+    margin-bottom: 24px;
+    color: #ff5555;
+}

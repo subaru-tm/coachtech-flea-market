@@ -17,15 +17,40 @@
             </div>
         </div>
         <div class="payment-method__option">
-            <div class="field-label">支払い方法</div>
-            <select form="purchase-commit" name="payment_method" id="selected-value" >
-                <option value="" selected>選択してください</option>
-                <option value="コンビニ払い">コンビニ払い</option>
-                <option value="カード払い">カード払い</option>
-            </select>
+            <!-- 支払い方法が選択されたら直ぐにページをリダイレクトしてpayment_method変数として値を取得。
+                 なお、バリデーションのため、リダイレクト後は選択中の値をsellectタグでも表示(if文にて定義)。 -->
+            <form class="form__payment-method" action="/purchase/:{{ $item['id'] }}" method="get">
+                @csrf
+                <div class="field-label">支払い方法</div>
+                <select name="payment_method" onchange="this.form.submit()" value="{{ old('payment_method') }}">
+                    <option value="" 
+                        @if(!isset($payment_method))
+                            selected
+                        @endif
+                        >選択してください
+                    </option>
+                    <option value="コンビニ払い"
+                        @if(isset($payment_method) && $payment_method="コンビニ払い")
+                            selected
+                        @endif
+                        >コンビニ払い
+                    </option>
+                    <option value="カード払い"
+                        @if(isset($payment_method) && $payment_method="カード払い")
+                            selected
+                        @endif
+                        >カード払い
+                    </option>
+                </select>
+                <div class="input-feild__alert">
+                    @error('payment_method')
+                        {{ $message }}
+                    @enderror
+                </div>
+            </form>
         </div>
         <div class="shipping-address__change">
-            <form class="form__address-link" action="/purchase/address/:{{ $item['id'] }}" method="get" id="address-update">
+            <form class="form__address-link" action="/purchase/address/:{{ $item['id'] }}" method="get">
             @csrf
                 <div class="shipping-address__change-header">
                     <div class="field-label">配送先</div>
@@ -40,13 +65,29 @@
                     <input type="hidden" name="shipping_building" value="{{ $shipping['shipping_building'] }}" form="address-update" />
                     {{ $shipping['shipping_address'] }} {{ $shipping['shipping_building'] }}
                  </div>
+
             </form>
+            <div class="input-feild__alert">
+                @error('shipping_post_code')
+                    {{ $message }}
+                @enderror
+            </div>
+            <div class="input-feild__alert">
+                @error('shipping_address')
+                    {{ $message }}
+                @enderror
+            </div>
+            <div class="input-feild__alert">
+                @error('shipping_building')
+                    {{ $message }}
+                @enderror
+            </div>
         </div>
     </div>
 
 
     <div class="subtotal-commit__area">
-        <form class="purchase-commit__form" action="/purchase/:{{ $item['id'] }}/commit" method="post" id="purchase-commit" >
+        <form class="purchase-commit__form" action="/purchase/:{{ $item['id'] }}/commit" method="post">
         @csrf
         <table class="subtotal-table">
             <tr class="subtotal-table__record">
@@ -56,15 +97,10 @@
             <tr class="subtotal-table__record">
                 <th class="subtotal-table__record-label">支払方法</th>
                 <td class="subtotal-table__record-item!">
-                    <p id="payment_method" ></p>
-                    <script>
-                        const select = document.getElementById("selected-value");
-                        const selectedValueDisplay = document.getElementById("payment_method");
-
-                        select.addEventListener("change", function(){
-                            selectedValueDisplay.textContent = this.value;
-                        });
-                    </script>
+                    @if(isset($payment_method))
+                        {{ $payment_method }}
+                        <input type="hidden" name="payment_method" value="{{ $payment_method }}" />
+                    @endif
                 </td>
             </tr>
         </table>
@@ -72,23 +108,20 @@
             <input type="hidden"
                 name="shipping_post_code"
                 value="{{ $shipping['shipping_post_code'] }}"
-                form="purchase-commit"
             />
             <input type="hidden"
                 name="shipping_address"
                 value="{{ $shipping['shipping_address'] }}"
-                form="purchase-commit"
             />
             <input type="hidden"
                 name="shipping_building"
                 value="{{ $shipping['shipping_building'] }}"
-                form="purchase-commit"
             />
         </div>
         <button class="purchase-commit__form-button" type="submit">購入する</button>
         </form>
     </div>
-    <div class="space__area"></div>
+    <div class="space__area"></div> <!-- ←←スタイル調整のため追加 -->
 </div>
 
 @endsection

@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\Purchase;
-
+use App\Http\Requests\AddressRequest;
+use App\Http\Requests\PurchaseRequest;
 
 class PurchaseController extends Controller
 {
@@ -19,7 +20,8 @@ class PurchaseController extends Controller
         $isExist = Purchase::PurchaseSearch($user_id, $item_id)->exists();
 
         if($isExist == "1") {
-
+            // 既にpurchasesテーブルに同じ商品、ユーザーでレコードが存在する場合、
+            // 配送先住所はそのレコードから取得。
             $purchase = Purchase::PurchaseSearch($user_id, $item_id)->first();
 
             $shipping = [
@@ -28,7 +30,8 @@ class PurchaseController extends Controller
                 'shipping_building' => $purchase['shipping_building'],
             ];
         } else {
-
+            // 新規レコードとなる場合、profile情報があるusersテーブルから住所等を
+            // デフォルトで取得。
             $user = User::find($user_id);
 
             $shipping = [
@@ -37,11 +40,18 @@ class PurchaseController extends Controller
                 'shipping_building' => $user->building,
             ];
         }
-          
+
+        if(isset($request['payment_method'])) {
+            // payment_methodが選択された際のリダイレクト用。payment_methodも一緒にviewに渡す。
+            $payment_method = $request['payment_method'];
+
+            return view('purchase', compact('shipping','item','payment_method'));
+        }
+
         return view('purchase', compact('shipping','item'));
     }
 
-    public function store(Request $request, $item_id) {
+    public function store(PurchaseRequest $request, $item_id) {
 
         $user_id = Auth::id();
 
@@ -68,10 +78,10 @@ class PurchaseController extends Controller
             ]
         );
 
-        return redirect('index');
+        return redirect(route('index'));
     }
 
-    public function updateShipping(Request $request, $item_id) {
+    public function editShipping(Request $request, $item_id) {
 
         $shipping = [
             'shipping_post_code' => $request->shipping_post_code,
@@ -83,7 +93,7 @@ class PurchaseController extends Controller
 
     }
 
-    public function shippingUpdate(Request $request, $item_id) {
+    public function shippingUpdate(AddressRequest $request, $item_id) {
 
         $user_id = Auth::id();
 
@@ -95,7 +105,6 @@ class PurchaseController extends Controller
                 'shipping_building' => $request->shipping_building,    
             ]
             );
-
         return redirect()->route('purchase', compact('item_id'));
     }
 }

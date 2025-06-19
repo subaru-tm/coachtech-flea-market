@@ -17,11 +17,7 @@
                 <input type="text" name="email" id="email" />
                 <div class="form__group-alert">
                     @error('email')
-                        @if ($message == '認証情報と一致するレコードがありません。')
-                            {{ 'ログイン情報が登録されていません。'}}
-                        @else
-                            {{ $message }}
-                        @endif
+                        {{ $message }}
                     @enderror
                 </div>
             </div>

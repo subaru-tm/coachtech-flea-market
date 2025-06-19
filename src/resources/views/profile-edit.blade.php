@@ -27,6 +27,12 @@
                         });
                     </script>
                 </div>
+                <div class="input-feild__alert">
+                        @error('img_file')
+                            {{ $message }}
+                        @enderror
+                </div>
+
                 <div class="input-form__group">
                     <div class="input-form__group-label">ユーザー名</div>
                     <input class="input-form__group-text" type="text" name="name" value="{{ $user['name'] }}" />

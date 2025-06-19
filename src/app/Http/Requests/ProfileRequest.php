@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class CommentRequest extends FormRequest
+class ProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class CommentRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::check();
+        return true;
     }
 
     /**
@@ -25,15 +24,14 @@ class CommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'comment' => 'required|max:255',
+            'img_file' => 'mimes:jpeg,png',
         ];
     }
 
     public function messages()
     {
         return [
-            'comment.required' => 'コメントを入力してください',
-            'comment.max' => 'コメントは255文字以内で入力してください',
+            'img_file.mimes' => '「.jpeg」もしくは「.png」形式でアップロードしてください',
         ];
     }
 }
