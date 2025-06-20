@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class UsersTableSeeder extends Seeder
 {
@@ -18,6 +19,7 @@ class UsersTableSeeder extends Seeder
         $param =[
             'name' => 'テストユーザー１',
             'email' => 'test1@test.com',
+            'email_verified_at' => Carbon::now(),
             'password' => Hash::make('test1pass'),
             'post_code' => '111-1111',
             'address' => 'テスト１県テスト１市テスト１区１－１－１',
@@ -29,6 +31,7 @@ class UsersTableSeeder extends Seeder
         $param =[
             'name' => 'テストユーザー２',
             'email' => 'test2@test.com',
+            'email_verified_at' => Carbon::now(),
             'password' => Hash::make('test2pass'),
             'post_code' => '222-2222',
             'address' => 'テスト２県テスト２市テスト２区２－２－２',

@@ -72,4 +72,9 @@ class UserController extends Controller
 
         return view('profile-edit', compact('user'));
     }
+
+    public function verify()
+    {
+        return view('auth.verify');
+    }
 }

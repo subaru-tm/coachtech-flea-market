@@ -64,7 +64,7 @@ class RegisterController extends Controller
 
         $this->guard->login($user);
 
-        return redirect('/mypage/profile');
+        return redirect(route('profile.edit'));
     }
 
 }

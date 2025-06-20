@@ -20,20 +20,21 @@ use App\Http\Controllers\PurchaseController;
 |
 */
 
+Auth::routes(['verify' => true]); //メール認証用
+
 Route::get('/search:{keyword?}', [ItemController::class, 'search'])->name('search');
 
 Route::get('/register', [RegisterController::class, 'create']);
 Route::post('/register', [RegisterController::class, 'store']);
-Route::get('/mypage/profile', [UserController::class, 'create']);
 Route::patch('/mypage/profile/update', [UserController::class, 'update']);
 Route::get('/login', [AuthSessionController::class, 'login'])->name('login');
 Route::post('/login', [AuthSessionController::class, 'store']);
 Route::get('/logout', [AuthSessionController::class, 'destroy'])->name('logout');
-
+Route::get('/verify', [UserController::class, 'verify'])->name('verify'); //メール認証確認画面
 
 Route::middleware('auth')->group(function () {
     Route::get('/mypage{tab}', [UserController::class, 'mypage'])->name('mypage');
-    Route::get('/mypage/profile', [UserController::class, 'profile'])->name('profile.edit');
+    Route::get('/mypage/profile', [UserController::class, 'profile'])->name('profile.edit')->middleware( 'verified');
     Route::get('/exhibition', [ItemController::class, 'create']);
     Route::post('/exhibition', [ItemController::class, 'store']);
 });
@@ -56,6 +57,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/item/:{item_id}', [ItemController::class, 'detail'])->name('item.detail');
 
-Route::get('/mail', [MailSendController::class, 'index']);
+Route::get('/mail', [MailSendController::class, 'index']); //メール認証用
 
 Route::get('/', [ItemController::class, 'index'])->name('index');
