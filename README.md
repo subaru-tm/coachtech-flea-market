@@ -56,24 +56,25 @@
       The [/var/www/public/storage] link has been connected to [/var/www/storage/app/public].
       The links have been created.
 
-- マイグレーション・シーダーの実行
-  - php artisan migrate
-  - php artisan db:seed
+- マイグレーション・シーダーの実行について
+  - テストコードでは各ファイルでの実行時にseederでデータをリフレッシュしています。
+  - このため、テストコード実行においてはseederの実行は不要となりますが、画面を参照する場合向けとして、下記コマンドを実行ください。
+    - php artisan migrate
+    - php artisan db:seed
  
-- テストコード作成用にduskをインストール<br>
-  （【参考】Qiitaのこちらのページを参照して実行：https://qiita.com/koi-ken/items/6b435f778a2208155f95）
-  - composer require laravel/dusk --dev
-  - ChromeDriverをインストールするため、cacert.pem(↓↓のurl)をダウンロードして、cドライブ直下にpemというディレクトリを作成して格納。
-    - http://curl.haxx.se/ca/cacert.pem
-  - php.iniに下記を追記。
-    - curl.cainfo=C:\pem\cacert.pem
-  - php artisan dusk:install
-  - Chromeを最新版にアップデートして下記のコマンドを実行
-    - php artisan dusk:chrome-driver 137.0.7151.69
-    - 実行後"ErrorException"が発生（次がそのメッセージ）。一旦無視して継続。
-      - file_get_contents(https://chromedriver.storage.googleapis.com/137.0.7151.69/chromedriver_linux64.zip): failed to open stream: HTTP request failed! HTTP/1.0 404 Not Found
-  - 各機能ごとにduskファイルを作成（テストケース一覧のD列（各機能）単位で作成）
-    - php artisan dusk:make RegisterTest
+- メール認証のためlaravel/uiをインストール
+  - composer require laravel/ui
+    - ⇒実行後のメッセージよりバージョン情報：Using version ^3.4 for laravel/ui
+  - php artisan ui bootstrap --auth
+  - 【補足】mailtrapでアカウントを作成し、Sandbox環境での認証メール送信・受信としております。
+      - メール認証をご確認される場合は、下記にてログインの上で認証処理を行ってください。
+        - ログイン(メアド):pleiades_tm@yahoo.co.jp
+          - (参考)アカウントID：2330889
+        - パスワード　：Test1@laravel
+      - 今回の模擬案件のために作成したアカウントのため、個人情報等のご心配は無用です。（念のため）
+      - なお、要件ご提示いただいた画面イメージのように、アカウント作成後にメール認証をガイド(再送信のリンク付き)するviewは用意したものの、その中に画面イメージ通りの認証ボタン「認証はこちらから」は用意できませんでした。（挑戦しましたが難解であり、頓挫しました）
+      - つまり、メール認証を行うには上記のmailtrapアカウントにログインするしかない、と思いますので念のためお伝えいたします。
+
    
 - テストコード
   - テストコード作成: php artisan make:test [テストコード名](下記参照)
