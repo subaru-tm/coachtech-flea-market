@@ -19,7 +19,7 @@ class CustomVerifyEmail extends VerifyEmailBase
 
         return (new MailMessage)
             ->subject('メールアドレス確認のお願い')
-            ->line('ご登録ありがとうございます。\nメールアドレス認証をお願いいたします') // 本文
+            ->line('ご登録ありがとうございます。メールアドレス認証をお願いいたします') // 本文
             ->action('認証はこちらから', $verificationUrl);  // アクションボタン
     }
 
