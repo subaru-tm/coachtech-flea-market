@@ -59,7 +59,8 @@ class PurchaseTest extends TestCase
         ]));
         $response->assertStatus(302);
 
-        $response->assertRedirect(route('index'));
+        $response->assertRedirect(route('stripe'));
+          // 応用要件の「stripeの決済画面へ接続される」を実装したため、そのルートにて検証。
 
         // 購入が完了したことをデータベースの状態で検証
 
@@ -112,7 +113,9 @@ class PurchaseTest extends TestCase
         ]));
         $response->assertStatus(302);
 
-        $response->assertRedirect(route('index'));
+        $response->assertRedirect(route('stripe'));
+            // 応用要件の「stripeの決済画面へ接続される」を実装したため、そのルートにて検証。
+
 
           // 購入が完了したことをデータベースの状態で検証
         $payment_method_classification = "1";
@@ -186,7 +189,8 @@ class PurchaseTest extends TestCase
         ]));
         $response->assertStatus(302);
 
-        $response->assertRedirect(route('index'));
+        $response->assertRedirect(route('stripe'));
+            // 応用要件の「stripeの決済画面へ接続される」を実装したため、そのルートにて検証。
 
           // 購入が完了したことをデータベースの状態で検証
         $payment_method_classification = "2";

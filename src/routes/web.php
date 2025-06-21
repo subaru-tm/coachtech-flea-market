@@ -60,3 +60,5 @@ Route::get('/item/:{item_id}', [ItemController::class, 'detail'])->name('item.de
 Route::get('/mail', [MailSendController::class, 'index']); //メール認証用
 
 Route::get('/', [ItemController::class, 'index'])->name('index');
+
+Route::get('/stripe/index', [PurchaseController::class, 'stripe'])->name('stripe');

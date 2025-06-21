@@ -78,7 +78,7 @@ class PurchaseController extends Controller
             ]
         );
 
-        return redirect(route('index'));
+        return redirect(route('stripe'));
     }
 
     public function editShipping(Request $request, $item_id) {
@@ -106,5 +106,10 @@ class PurchaseController extends Controller
             ]
             );
         return redirect()->route('purchase', compact('item_id'));
+    }
+
+    public function stripe() {
+        // 応用要件 購入完了後、stripeの決済画面んを開くために使用
+        return view('stripe.stripe-index');
     }
 }
