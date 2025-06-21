@@ -12,53 +12,44 @@
   - cp .env.example .env  // 環境変数を設定
   - php artisan key:generate
   - php artisan storage:link  // シンボリックリンク作成
-    - (実行後のメッセージ）
-      The [/var/www/public/storage] link has been connected to [/var/www/storage/app/public].
-      The links have been created.
   - php artisan migrate
   - php artisan db:seed
-    - シーダー実行についての補足。
-      - テストコード実行では各機能の冒頭で必ずシーダー実行してDBリフレッシュしています。
-      - このためテストコード実行においては手動でのシーダー実行は不要です。
-      - テストコード実行前に画面で参照したい場合にシーダー実行ください。
+  - composer require laravel/fortify  // fortifyインストール
+    - php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
+  - composer require laravel/ui  // メール認証のためlaravel/uiをインストール
+    - php artisan ui bootstrap --auth
 
-   - origin  git@github.com:subaru-tm/coachtech-flea-market.git (fetch)
-   - origin  git@github.com:subaru-tm/coachtech-flea-market.git (push)
+## 開発環境
+- 商品一覧画面 : http://localhost/
+- 会員登録画面 : http://localhost/register
+- phpMyAdmin  : http://localhost:8080
 
-  - git add .
-  - git commit -m "リモートリポジトリの変更"
-  - git push origin main
+## 使用技術(実行環境)
+- PHP 7.4.9
+- Laravel Framework 8.83.8
+- MySQL 8.0.26
+- nginx 1.21.1
+- laravel/fortify 1.19
+- laravel/ui 3.4
 
+## ER図
 
+![image](https://github.com/user-attachments/assets/dd5d1fd9-1ae0-4313-895d-d503fdf5bf72)
 
-
-- fortifyインストール
-  - composer require laravel/fortify
-    - （実行後のメッセージ：fortifyのバージョン情報として）
-      Using version ^1.19 for laravel/fortify
-  - php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
-
-- モデル・マイグレーションファイル作成
-  - php artisan make:model Item -m
-    - Item.php
-    - 2025_05_25_140719_create_items_table.php
-  - php artisan make:model Mylist -m
-    - Mylist.php
-    - 2025_05_25_140854_create_mylists_table.php
-  - php artisan make:model Purchase -m
-    - Purchase.php
-    - 2025_05_25_141031_create_purchases_table.php
-  - php artisan make:model Category -m
-    - Category.php
-    - 2025_05_25_140000_create_categories_table.php
-      - (マイグレーションファイルの時刻部分をリネーム済）
-     
-
+## その他（応用要件に伴うアカウント情報やテストコードについて）
 - 応用要件について
   - 一通り実装をしております。それぞれの要件実装について解説・補足致します。
     - **メールを用いた認証機能**
-      - mailtrapを使用して実装しています。laravel/uiもインストールしています。
-      - 詳細は後述「メール認証のためlaravel/uiをインストール」「mailtraoでアカウントを作成」をご参照ください。
+      - mailtrapを使用して実装しています。.envに設定反映してあります。
+      - mailtrapアカウント情報
+        - Sandbox環境での認証メール送信・受信を実装しています。
+        - メール認証処理をご確認される場合は、下記にてmailtrapにログインの上、認証処理を行ってください。
+          - ログイン(メアド):pleiades_tm@yahoo.co.jp
+            - (参考)アカウントID：2330889
+          - パスワード　：Test1@laravel
+        - 今回の模擬案件のために作成したアカウントのため、個人情報等のご心配は無用です。（念のため）
+        - なお、上記アカウントにログインしないとメール認証できない認識です。
+          - Figma画面イメージのメール認証view(再送信のリンク付き)は用意したものの、その中の認証ボタン「認証はこちらから」は実装できませんでしたのでお伝えいたします。（挑戦しましたが難解であり、頓挫しました）
     - **検索状態がマイリストでも保持**
       - routeにて'mylist.keyword'とのnameで登録されたもので処理しています
       - 機能要件では、キーワード検索 →→ マイリスト表示での指定かと思われますが、マイリスト表示の後にキーワード検索を行ってもAND結果が表示できるようにしております
@@ -75,24 +66,11 @@
      - 上述の「シンボリックリンク作成」がこの要件実装のためです。
 - 応用要件は以上との認識です。
  
-- メール認証のためlaravel/uiをインストール
-  - composer require laravel/ui
-    - ⇒実行後のメッセージよりバージョン情報：Using version ^3.4 for laravel/ui
-  - php artisan ui bootstrap --auth
-- mailtrapでアカウントを作成
-  - Sandbox環境での認証メール送信・受信を実装しています。
-  - メール認証処理をご確認される場合は、下記にてログインの上で認証処理を行ってください。
-    - ログイン(メアド):pleiades_tm@yahoo.co.jp
-        - (参考)アカウントID：2330889
-    - パスワード　：Test1@laravel
-  - 今回の模擬案件のために作成したアカウントのため、個人情報等のご心配は無用です。（念のため）
-  - なお、要件ご提示いただいた画面イメージのように、アカウント作成後にメール認証をガイド(再送信のリンク付き)するviewは用意したものの、その中に画面イメージ通りの認証ボタン「認証はこちらから」は用意できませんでした。（挑戦しましたが難解であり、頓挫しました）
-  - つまり、メール認証を行うには上記のmailtrapアカウントにログインするしかない、との認識です。
    
-- テストコードについて
+- テストコードファイル名と機能の紐付き
   - テストコード作成: php artisan make:test [テストコード名](下記参照)
   - テストコード実行: php artisan test
-  - 各機能に対するテストコード名（~/src/tests/Unit/配下に格納。IDは「テストケース一覧」を引用）
+  - 各機能に対するテストコード名（~/src/tests/Feature/配下に格納。IDは「テストケース一覧」を引用）
     - ID: 1 会員登録機能　　　 => RegisterTest
     - ID: 2 ログイン機能　　　 => LoginTest
     - ID: 3 ログアウト機能　　 => LogoutTest
