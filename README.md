@@ -1,28 +1,35 @@
 # Coachtech-flea-market
 
 ## 環境構築
-- laravelテンプレートのクローン
+- Dockerビルド
   - git clone git@github.com:coachtech-material/laravel-docker-template.git
   - mv laravel-docker-template/ coachtech-flea-market
-  - cd coachtech-flea-market
+  - docker-compose up -d --build
 
-- リモートリポジトリの変更
-  - git remote set-url origin git@github.com:subaru-tm/coachtech-flea-market.git
-  - git remote -v
-    - 出力メッセージ
-      - origin  git@github.com:subaru-tm/coachtech-flea-market.git (fetch)
-      - origin  git@github.com:subaru-tm/coachtech-flea-market.git (push)
+- Laravel環境構築
+  - docker-compose exec php bash
+  - composer install
+  - cp .env.example .env  // 環境変数を設定
+  - php artisan key:generate
+  - php artisan storage:link  // シンボリックリンク作成
+    - (実行後のメッセージ）
+      The [/var/www/public/storage] link has been connected to [/var/www/storage/app/public].
+      The links have been created.
+  - php artisan migrate
+  - php artisan db:seed
+    - シーダー実行についての補足。
+      - テストコード実行では各機能の冒頭で必ずシーダー実行してDBリフレッシュしています。
+      - このためテストコード実行においては手動でのシーダー実行は不要です。
+      - テストコード実行前に画面で参照したい場合にシーダー実行ください。
+
+   - origin  git@github.com:subaru-tm/coachtech-flea-market.git (fetch)
+   - origin  git@github.com:subaru-tm/coachtech-flea-market.git (push)
 
   - git add .
   - git commit -m "リモートリポジトリの変更"
   - git push origin main
 
-- dockerの構築
-  - docker-compose up -d --build
 
-- laravelインストール
-  - docker-compose exec php bash
-  - composer install
 
 
 - fortifyインストール
@@ -46,22 +53,6 @@
     - 2025_05_25_140000_create_categories_table.php
       - (マイグレーションファイルの時刻部分をリネーム済）
      
-- キーを生成
-  - php artisan key:generate
-
-- シンボリックリンク作成
-  - php artisan storage:link
-    - (実行後のメッセージ）
-      The [/var/www/public/storage] link has been connected to [/var/www/storage/app/public].
-      The links have been created.
-
-- マイグレーション・シーダーの実行について
-  - php artisan migrate
-  - シーダー実行について
-    - テストコードでは各ファイルでの実行時にseederでデータをリフレッシュしています。
-    - このため、テストコードを先に実行する場合においてはseeder実行は不要となりますが、
-    - 先に画面を参照する場合向けとして、下記コマンドを実行ください。
-      - php artisan db:seed
 
 - 応用要件について
   - 一通り実装をしております。それぞれの要件実装について解説・補足致します。
