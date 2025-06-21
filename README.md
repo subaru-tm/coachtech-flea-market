@@ -41,7 +41,6 @@
   - php artisan make:model Purchase -m
     - Purchase.php
     - 2025_05_25_141031_create_purchases_table.php
-
   - php artisan make:model Category -m
     - Category.php
     - 2025_05_25_140000_create_categories_table.php
@@ -73,7 +72,17 @@
       - routeにて'mylist.keyword'とのnameで登録されたもので処理しています
       - 機能要件では、キーワード検索 →→ マイリスト表示での指定かと思われますが、マイリスト表示の後にキーワード検索を行ってもAND結果が表示できるようにしております
     - **「購入する」ボタン押下後、stripe決済画面に接続**
-      - 
+      - stripeがgitで公開しているサンプルプロジェクトから決済画面と思われるhtml,cssをコピーしました。
+        - コピー元：https://github.com/stripe-samples/accept-a-payment/tree/main/payment-element
+        - コピー先
+          - /src/resources/views/stripe/stripe-index.blade.php
+          - /src/public/css/stripe/base.css
+        - なお、当stripe画面を表示した先の遷移画面はログインが必要のようですが、今回stripeのアカウントは作成しておりません。
+        - また、上記のようにコピーして使用するよりは、APIなどで呼び出した方がよいかと思いましたが、そこまでの実装に至れませんでした。
+   - **該当画像はlaravelのstorageディレクトリに保存されていること**
+     - ユーザー画像、出品商品画像のそれぞれで実装しています。
+     - 上述の「シンボリックリンク作成」がこの要件実装のためです。
+- 応用要件は以上との認識です。
  
 - メール認証のためlaravel/uiをインストール
   - composer require laravel/ui
@@ -88,9 +97,8 @@
   - 今回の模擬案件のために作成したアカウントのため、個人情報等のご心配は無用です。（念のため）
   - なお、要件ご提示いただいた画面イメージのように、アカウント作成後にメール認証をガイド(再送信のリンク付き)するviewは用意したものの、その中に画面イメージ通りの認証ボタン「認証はこちらから」は用意できませんでした。（挑戦しましたが難解であり、頓挫しました）
   - つまり、メール認証を行うには上記のmailtrapアカウントにログインするしかない、との認識です。
-
    
-- テストコード
+- テストコードについて
   - テストコード作成: php artisan make:test [テストコード名](下記参照)
   - テストコード実行: php artisan test
   - 各機能に対するテストコード名（~/src/tests/Unit/配下に格納。IDは「テストケース一覧」を引用）
