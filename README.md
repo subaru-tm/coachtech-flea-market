@@ -18,6 +18,7 @@
     - php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
   - composer require laravel/ui  // メール認証のためlaravel/uiをインストール
     - php artisan ui bootstrap --auth
+  - chmod -R 777 ./* // windows環境のためか、cloneしての疎通確認で毎回権限エラーとなるため念のため記載いたします。
 
 ## 開発環境
 - 商品一覧画面 : http://localhost/
