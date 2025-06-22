@@ -82,7 +82,7 @@
  
    
 - テストコードファイル名と機能の紐付き
-  - テストコード作成: php artisan make:test [テストコード名](下記参照)
+  - テストコード作成: php artisan make:test {テストコード名}(下記参照)
   - テストコード実行: php artisan test
   - 各機能に対するテストコード名（~/src/tests/Feature/配下に格納。IDは「テストケース一覧」を引用）
     - ID: 1 会員登録機能　　　 => RegisterTest
