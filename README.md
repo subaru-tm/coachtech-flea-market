@@ -15,9 +15,9 @@
   - php artisan migrate
   - php artisan db:seed
     - シーダー作成のユーザーログイン情報（メアド / パスワード)
-      - test1@test.com / test1pass  // メール認証済の状態
-      - test2@test.com / test2pass  // 同上
-      - test3@test.com / test3pass  // メール認証未。プロフィール画面を開こうとしてもメール認証確認画面に遷移します
+      - test1@test.com / test1pass    // メール認証済の状態
+      - test2@test.com / test2pass    // 同上
+      - test3@test.com / test3pass    // メール認証未。プロフィール画面を開こうとしてもメール認証確認画面に遷移します
   - composer require laravel/fortify  // fortifyインストール
     - php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
   - composer require laravel/ui  // メール認証のためlaravel/uiをインストール
