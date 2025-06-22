@@ -18,7 +18,15 @@
     - php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
   - composer require laravel/ui  // メール認証のためlaravel/uiをインストール
     - php artisan ui bootstrap --auth
-  - chmod -R 777 ./* // windows環境のためか、cloneしての疎通確認で毎回権限エラーとなるため念のため記載いたします。
+  - cloneして疎通テストを行ったことに伴う留意点（実行はphpコンテナでのHOMEディレクトリです）
+    - シーダーまで実行した後、画面が開けない可能性があるので、権限付与をお願いします。
+      - chmod -R 777 ./*
+        - 【補足】windows環境のためか、cloneすると毎回権限エラーとなるため念のため記載でした。
+    - tests/Unitディレクトリの作成をお願いします。
+      - mkdir ./tests/Unit
+        - 【補足】テストコードは全てFeatureに格納したため、Unit側がゼロファイルであり、gitではUnitディレクトリが消えてしまうようですね。
+        - 別の対策等があるのかもしれませんが、申し訳ありません、今回はcloneの後にUnitディレクトリ作成をお願いいたします。
+          - php artisan test の実行前に対応いただければ問題ありません。
 
 ## 開発環境
 - 商品一覧画面 : http://localhost/
