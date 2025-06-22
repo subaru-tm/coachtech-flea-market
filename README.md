@@ -31,6 +31,7 @@
 - nginx 1.21.1
 - laravel/fortify 1.19
 - laravel/ui 3.4
+- jquery 3.6.0  // ユーザー画像など、選択後にすぐにプレビュー表示する際に使用。
 
 ## ER図
 
