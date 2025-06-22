@@ -14,6 +14,10 @@
   - php artisan storage:link  // シンボリックリンク作成
   - php artisan migrate
   - php artisan db:seed
+    - シーダー作成のユーザーログイン情報（メアド / パスワード)
+      - test1@test.com / test1pass  // メール認証済の状態
+      - test2@test.com / test2pass  // 同上
+      - test3@test.com / test3pass  // メール認証未。プロフィール画面を開こうとしてもメール認証確認画面に遷移します
   - composer require laravel/fortify  // fortifyインストール
     - php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
   - composer require laravel/ui  // メール認証のためlaravel/uiをインストール
@@ -26,7 +30,7 @@
       - mkdir ./tests/Unit
         - 【補足】テストコードは全てFeatureに格納したため、Unit側がゼロファイルであり、gitではUnitディレクトリが消えてしまうようですね。
         - 別の対策等があるのかもしれませんが、申し訳ありません、今回はcloneの後にUnitディレクトリ作成をお願いいたします。
-          - php artisan test の実行前に対応いただければ問題ありません。
+          - php artisan test の実行前に対応いただければ問題ありません。 
 
 ## 開発環境
 - 商品一覧画面 : http://localhost/
