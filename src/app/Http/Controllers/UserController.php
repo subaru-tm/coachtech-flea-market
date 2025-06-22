@@ -24,19 +24,38 @@ class UserController extends Controller
     {
         $user_id = Auth::id();
         $file = $request->file('img_file');
-        $originalName = $file->getClientOriginalName();
-        $file->storeAs('public/', $originalName);
 
-        $image_path = 'storage/' . $originalName;
+        if(!isset($file)) {
 
-        $user_profile = $request->only(['name', 'post_code', 'address', 'building', 'image']);
-        User::find($user_id)->update([
-            'name' => $request->name,
-            'post_code' => $request->post_code,
-            'address' => $request->address,
-            'building' => $request->building,
-            'image' => $image_path,
-        ]);
+              // 必須ではないため画像がアップロードされていない場合、nullがありえる。
+              // この場合、画像保存等の処理を行うとエラーとなるため、名前、住所の更新のみとする。
+
+            $user_profile = $request->only(['name', 'post_code', 'address', 'building']);
+
+            User::find($user_id)->update([
+                'name' => $request->name,
+                'post_code' => $request->post_code,
+                'address' => $request->address,
+                'building' => $request->building,
+            ]);
+
+        } else {
+              // 画像がアップロードされた場合の処理
+            $originalName = $file->getClientOriginalName();
+            $file->storeAs('public/', $originalName);
+    
+            $image_path = 'storage/' . $originalName;
+    
+            $user_profile = $request->only(['name', 'post_code', 'address', 'building', 'image']);
+            User::find($user_id)->update([
+                'name' => $request->name,
+                'post_code' => $request->post_code,
+                'address' => $request->address,
+                'building' => $request->building,
+                'image' => $image_path,
+            ]);
+
+        }
 
         return redirect('/');
     }
