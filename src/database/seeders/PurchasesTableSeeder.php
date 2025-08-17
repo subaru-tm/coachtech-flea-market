@@ -16,7 +16,7 @@ class PurchasesTableSeeder extends Seeder
     {
         $param =[
             'user_id' => '1',
-            'item_id' => '4',
+            'item_id' => '7',
             'payment_method' => 'konbini',
             'shipping_post_code' => '111-1111',
             'shipping_address' => 'test1 address',
@@ -26,7 +26,7 @@ class PurchasesTableSeeder extends Seeder
 
         $param =[
             'user_id' => '2',
-            'item_id' => '7',
+            'item_id' => '4',
             'payment_method' => 'card',
             'shipping_post_code' => '222-2222',
             'shipping_address' => 'test2 address',

@@ -35,7 +35,7 @@ class ItemController extends Controller
         if (Auth::check()) {
             $user_id = Auth::id();
             $mylist_items_id = Mylist::MylistItemSearch($user_id)->get();
-            $items = Item::whereIn('id', $mylist_items_id)->get();
+            $items = Item::whereIn('id', $mylist_items_id)->where('user_id', '<>', $user_id)->get();
 
             // purchasesテーブルは、配送先の選択中など、購入完了前でも一時的に
             // DBに値が挿入されている可能性がある。このため購入完了のみを抽出。
@@ -66,7 +66,7 @@ class ItemController extends Controller
             $user_id = Auth::id();
             $mylist_items_id = Mylist::MylistItemSearch($user_id)->get();
 
-            $items = Item::KeywordSearch($keyword)->whereIn('id', $mylist_items_id)->get();
+            $items = Item::KeywordSearch($keyword)->whereIn('id', $mylist_items_id)->where('user_id', '<>', $user_id)->get();
 
             $purchases = Purchase::CommitedPurchase()->get();
 

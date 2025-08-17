@@ -73,15 +73,19 @@ class ItemSearchTest extends TestCase
         $databaseMylistNiceItem = Mylist::where('user_id', $user_id)->where('nice_flug', '1')->get();
         $databaseMylistNiceItemId = collect($databaseMylistNiceItem)->pluck('item_id');
 
+        // ログイン中ユーザー自身が出品したitemを除く。
+        $myExDatabeseItems = Item::where('user_id', $user_id)->get();
+        $myExDatabeseItemsId = $myExDatabeseItems->pluck('id');
+        $databaseMylistNiceItemIds = $databaseMylistNiceItemId->diff($myExDatabeseItemsId->toArray())->toArray();
 
         $databeseKeywordData = Item::where( 'name', 'like', '%'.$keyword.'%' )->get();
         $databaseKeywordDataItemsId = collect($databeseKeywordData)->pluck('id');
 
 
-        $databaseResultDataId = $databaseKeywordDataItemsId->intersect($databaseMylistNiceItemId);
+        $databaseResultDataId = $databaseKeywordDataItemsId->intersect($databaseMylistNiceItemIds)->toArray();
 
         // マイページのレスポンス(3-2.のデータ)とDB取得結果のitem_idの一致を検証
-        $this->assertEquals($responseMylistDataItemsId, $databaseResultDataId);
+        $this->assertEquals($responseMylistDataItemsId->toArray(), array_values($databaseResultDataId));
 
         ob_get_clean();
         ob_get_clean();

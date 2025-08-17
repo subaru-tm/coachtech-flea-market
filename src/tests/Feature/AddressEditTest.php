@@ -31,7 +31,7 @@ class AddressEditTest extends TestCase
         $this->actingAs($user)->assertAuthenticated();
         $user_id = Auth::id();
  
-        $item_id = '5';  // Seederで生成したデータ。
+        $item_id = '6';  // Seederで生成したデータ。
                          // まだ購入されていない商品。
  
  
@@ -77,7 +77,7 @@ class AddressEditTest extends TestCase
         $this->actingAs($user)->assertAuthenticated();
         $user_id = Auth::id();
  
-        $item_id = '6';  // Seederで生成したデータ。
+        $item_id = '8';  // Seederで生成したデータ。
                          // まだ購入されていない商品。
  
  

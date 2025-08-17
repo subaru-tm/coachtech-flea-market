@@ -47,9 +47,14 @@ class MylistTest extends TestCase
         $databaseMyNiceItems = Mylist::where('user_id', $user_id)->where('nice_flug', '1')->get();
         $databaseMyNiceItemsId = $databaseMyNiceItems->pluck('item_id');
 
+        // ログイン中ユーザー自身が出品したitemを除く。
+        $myExDatabeseItems = Item::where('user_id', $user_id)->get();
+        $myExDatabeseItemsId = $myExDatabeseItems->pluck('id');
+        $databaseMyNiceItemsIds = $databaseMyNiceItemsId->diff($myExDatabeseItemsId->toArray())->toArray();
+
         // view表示のitem_idと、ログイン中のユーザーの「いいね」のitem_idを比較
         // ここでは一致していることを検証。データベースの値次第で、配列内の順番は変わるため順不同検証
-        $this->assertEquals($responseItemsId->toArray(), $databaseMyNiceItemsId->toArray());
+        $this->assertEquals($responseItemsId->toArray(), array_values($databaseMyNiceItemsIds));
 
         // 1行では警告が消えなかったため、出力バッファを削除する処理を2行追加
         ob_get_clean();
@@ -96,6 +101,7 @@ class MylistTest extends TestCase
         $responseItems = collect($responseData['items']);
         $responseItemsId = $responseItems->pluck('id');
 
+
         // itemsテーブルの中でログイン中のユーザーが出品したitem_idを取得
         $user_id = Auth::id();
         $myExDatabeseItems = Item::where('user_id', $user_id)->get();
@@ -104,6 +110,7 @@ class MylistTest extends TestCase
         // view表示のitem_idと、ログイン中のユーザーの出品item_idを比較
         // 今回は全て差分として出る（一致しているものがないことの検証）
         $diff = $responseItemsId->diff($myExDatabeseItemsId->toArray());
+
 
         // 最終的にview表示のitem_id配列と上記の差分が一致していることで検証
         $this->assertEquals($responseItemsId->toArray(), $diff->toArray());
