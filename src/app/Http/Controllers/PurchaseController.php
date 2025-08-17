@@ -53,16 +53,9 @@ class PurchaseController extends Controller
 
     public function store(PurchaseRequest $request, $item_id) {
 
-        $user_id = Auth::id();
+        $item = Item::find($item_id);
 
-        switch ($request->payment_method) {
-            case ("コンビニ払い"):
-                $payment_method = '1';
-                break;
-            case ("カード払い"):
-                $payment_method = '2';
-                break;
-        };
+        $user_id = Auth::id();
 
         $shipping_post_code = $request->shipping_post_code;
         $shipping_address = $request->shipping_address;
@@ -71,10 +64,10 @@ class PurchaseController extends Controller
         $pachase = Purchase::updateOrCreate(
             ['user_id' => $user_id, 'item_id' => $item_id],
             [
-            'payment_method' => $payment_method,
-            'shipping_post_code' => $shipping_post_code,
-            'shipping_address' => $shipping_address,
-            'shipping_building' => $shipping_building,
+            'payment_method' => $request->payment_method,
+            'shipping_post_code' => $request->shipping_post_code,
+            'shipping_address' => $request->shipping_address,
+            'shipping_building' => $request->shipping_building ?? null,
             ]
         );
 

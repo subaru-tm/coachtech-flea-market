@@ -47,15 +47,15 @@ class PurchaseTest extends TestCase
 
           // 商品購入画面を開いている時点で商品が選択されている前提となるため、
           // 正常終了のために必要な支払い方法を入力したものとする
-        $payment_method = "カード払い";
+        $payment_method = "card";
 
           // 「購入する」ボタンを押下、viewからのRequestとして下記を送信。
         $response = $this->post(route('purchase.commit', [
             'item_id' => $item_id,
             'payment_method' => $payment_method,
-            'shipping_post_code' =>$responseShipping['shipping_post_code'],
-            'shipping_address' =>$responseShipping['shipping_address'],
-            'shipping_building' =>$responseShipping['shipping_building'],
+            'shipping_post_code' => $responseShipping['shipping_post_code'],
+            'shipping_address' => $responseShipping['shipping_address'],
+            'shipping_building' => $responseShipping['shipping_building'],
         ]));
         $response->assertStatus(302);
 
@@ -64,13 +64,10 @@ class PurchaseTest extends TestCase
 
         // 購入が完了したことをデータベースの状態で検証
 
-        $payment_method_classification = "2";
-         // payment_methodは、DB登録の際にtinyint型へ変換。"2" が "カード払い" を意味。
-
         $this->assertDatabaseHas('purchases', [
             'user_id' => $user_id,
             'item_id' => $item_id,
-            'payment_method' => $payment_method_classification,
+            'payment_method' => $payment_method,
         ]);
             // payment_methodが登録されていれば購入完了のステータスになる
             // 住所はデフォルト値で更新なしのため、検証対象から除外。
@@ -101,7 +98,7 @@ class PurchaseTest extends TestCase
 
           // 商品購入画面を開いている時点で商品が選択されている前提となるため、
           // 正常終了のために必要な支払い方法を入力したものとする
-        $payment_method = "コンビニ払い";
+        $payment_method = "konbini";
 
           // 「購入する」ボタンを押下、viewからのRequestとして下記を送信。
         $response = $this->post(route('purchase.commit', [
@@ -116,15 +113,10 @@ class PurchaseTest extends TestCase
         $response->assertRedirect(route('stripe'));
             // 応用要件の「stripeの決済画面へ接続される」を実装したため、そのルートにて検証。
 
-
-          // 購入が完了したことをデータベースの状態で検証
-        $payment_method_classification = "1";
-         // payment_methodは、DB登録の際にtinyint型へ変換。"1" が "コンビニ払い" を意味。
-
         $this->assertDatabaseHas('purchases', [
             'user_id' => $user_id,
             'item_id' => $item_id,
-            'payment_method' => $payment_method_classification,
+            'payment_method' => $payment_method,
         ]);
 
         // 4. 商品一覧画面を表示する        
@@ -177,7 +169,7 @@ class PurchaseTest extends TestCase
 
           // 商品購入画面を開いている時点で商品が選択されている前提となるため、
           // 正常終了のために必要な支払い方法を入力したものとする
-        $payment_method = "カード払い";
+        $payment_method = "card";
 
           // 「購入する」ボタンを押下、viewからのRequestとして下記を送信。
         $response = $this->post(route('purchase.commit', [
@@ -193,13 +185,11 @@ class PurchaseTest extends TestCase
             // 応用要件の「stripeの決済画面へ接続される」を実装したため、そのルートにて検証。
 
           // 購入が完了したことをデータベースの状態で検証
-        $payment_method_classification = "2";
-          // payment_methodは、DB登録の際にtinyint型へ変換。"2" が "カード払い" を意味。
 
         $this->assertDatabaseHas('purchases', [
             'user_id' => $user_id,
             'item_id' => $item_id,
-            'payment_method' => $payment_method_classification,
+            'payment_method' => $payment_method,
         ]);
 
         // 4. プロフィール画面をを表示する

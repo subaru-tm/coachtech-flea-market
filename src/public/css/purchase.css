@@ -14,12 +14,16 @@
 
 .content {
     width: 100%;
+}
+
+.purchase-form {
+    width: 100%;
     display: flex;
     justify-content: space-between;
 }
 
 .option__area {
-    margin: 64px 5%;
+    margin: 64px 2%;
     width: 55%;
 }
 
@@ -61,20 +65,20 @@
     padding: 24px 0;
     font-size: 20px;
     font-weight: 700;
+    color: #000000;
 }
 
 .shipping-address__change {
-    padding-bottom: 48px;
     border-bottom: 1px solid #000000;
 }
 
-.shipping-address__change-header {
+.purchase__flex {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.shipping-address__change-link {
+.shipping-address__change-button {
     margin-right: 16px;
     text-decoration: none;
     border: none;
@@ -86,15 +90,25 @@
 
 .shipping__field-display {
     margin-left: 96px;
+    margin-bottom: 40px;
     padding: 4px 4px;
     border-radius: 4px;
     font-size: 20px;
     font-weight: 600;
 }
 
+.input_destination {
+    border: none;
+    padding: 5px 0;
+    width: 70%;
+    font-size: 20px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
 .subtotal-commit__area {
     margin-top: 64px;
-    width: 30%;
+    width: 36%;
     font-size: 24px;
 }
 
@@ -134,7 +148,7 @@
 }
 
 .space__area {
-    width: 5%;
+    width: 2%;
 }
 
 .input-feild__alert {

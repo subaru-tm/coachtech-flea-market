@@ -43,7 +43,11 @@ class UsersTableSeeder extends Seeder
         $param =[
             'name' => 'テストユーザー３',
             'email' => 'test3@test.com',
+            'email_verified_at' => Carbon::now(),
             'password' => Hash::make('test3pass'),
+            'post_code' => '333-3333',
+            'address' => 'テスト３県テスト３市テスト３区３－３－３',
+            'building' => 'テスト３ビル３０３',
         ];
         DB::table('users')->insert($param);
     }

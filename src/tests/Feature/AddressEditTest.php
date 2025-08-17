@@ -99,8 +99,7 @@ class AddressEditTest extends TestCase
  
         // 3. 商品を購入する
 
-        $testPaymentMethod = "カード払い"; // 選択必須のためテスト入力値とする
-        $testPaymentMethodClassification = "2"; // 入力ではないがDB登録時に変換される想定
+        $testPaymentMethod = "card"; // 選択必須のためテスト入力値とする
 
         $response = $this->post(route('purchase.commit', [
             'item_id' => $item_id,
@@ -114,7 +113,7 @@ class AddressEditTest extends TestCase
         $this->assertDatabaseHas('purchases', [
             'user_id' => $user_id,
             'item_id' => $item_id,
-            'payment_method' => $testPaymentMethodClassification, //tinyint型に変換される
+            'payment_method' => $testPaymentMethod,
             'shipping_post_code' => $testDataPostCode,
             'shipping_address' => $testDataAddress,
             'shipping_building' => $testDataBuilding,            
