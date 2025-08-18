@@ -47,6 +47,7 @@
 - jquery 3.6.0  // ユーザー画像など、選択後にすぐにプレビュー表示する際に使用。
 - beyondcode/laravel-websockets 1.14
 - pusher/pusher-php-server 7.2
+- laravel-echo 2.2.0
 
 ## ER図
 
