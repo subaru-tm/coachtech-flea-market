@@ -45,6 +45,8 @@
 - laravel/fortify 1.19
 - laravel/ui 3.4
 - jquery 3.6.0  // ユーザー画像など、選択後にすぐにプレビュー表示する際に使用。
+- beyondcode/laravel-websockets 1.14
+- pusher/pusher-php-server 7.2
 
 ## ER図
 
