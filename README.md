@@ -48,6 +48,7 @@
 - beyondcode/laravel-websockets 1.14
 - pusher/pusher-php-server 7.2
 - laravel-echo 2.2.0
+- livewire/livewire 2.12
 
 ## ER図
 
