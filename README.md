@@ -24,6 +24,9 @@
     - php artisan ui bootstrap --auth
   - composer require livewire/livewire // 取引完了モーダル表示のためにインストール
     - php artisan make:livewire CompleteModal
+  - メール送信(取引完了の通知)のために実行したコマンド
+    - php artisan make:mail MailableMailtrap
+    - php artisan serve
   - cloneして疎通テストを行ったことに伴う留意点（実行はphpコンテナでのHOMEディレクトリです）
     - シーダーまで実行した後、画面が開けない可能性があるので、権限付与をお願いします。
       - chmod -R 777 ./*
