@@ -22,11 +22,11 @@
     - php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
   - composer require laravel/ui  // メール認証のためlaravel/uiをインストール
     - php artisan ui bootstrap --auth
-  - composer require livewire/livewire // 取引完了モーダル表示のためにインストール
+**  - composer require livewire/livewire // 取引完了モーダル表示のためにインストール
     - php artisan make:livewire CompleteModal
   - メール送信(取引完了の通知)のために実行したコマンド
     - php artisan make:mail MailableMailtrap
-    - php artisan serve
+    - php artisan serve**
   - cloneして疎通テストを行ったことに伴う留意点（実行はphpコンテナでのHOMEディレクトリです）
     - シーダーまで実行した後、画面が開けない可能性があるので、権限付与をお願いします。
       - chmod -R 777 ./*
@@ -36,6 +36,7 @@
 - 商品一覧画面 : http://localhost/
 - 会員登録画面 : http://localhost/register
 - phpMyAdmin  : http://localhost:8080
+- マイページ取引中タブ : http://localhost/mypagedealing
 
 ## 使用技術(実行環境)
 - PHP 7.4.9
@@ -44,16 +45,29 @@
 - nginx 1.21.1
 - laravel/fortify 1.19
 - laravel/ui 3.4
-- jquery 3.6.0  // ユーザー画像など、選択後にすぐにプレビュー表示する際に使用。
+- jquery 3.6.0  // ユーザー画像など、選択後にすぐにプレビュー表示する際に使用。**編集ボタン押下により編集可とすることでも使用。**
 - beyondcode/laravel-websockets 1.14
 - pusher/pusher-php-server 7.2
 - laravel-echo 2.2.0
 - livewire/livewire 2.12
 
 ## ER図
+- 今回の対応により追加したテーブルを反映したER図です。
+  - 赤枠箇所の２テーブルを追加しています。
+  - テーブルに関して、他の箇所での修正は発生しておりません。
+<img width="1043" height="634" alt="ER図_Chat追加後Coachtechフリマ 2025-08-24" src="https://github.com/user-attachments/assets/63642ad3-1f32-465e-b011-35acb144c049" />
 
-![image](https://github.com/user-attachments/assets/dd5d1fd9-1ae0-4313-895d-d503fdf5bf72)
+## 今回対応での留意点(2025年8月24日)
+- チャットのメッセージ受信にはリロードが必要です。ご注意ください。
+  - リアルタイムチャットとして、pusher, WebSocket, livewireでのイベントリスナーでのリアルタイム受信に挑戦しましたが、時間の都合で実装に至れませんでした。
+  - もし、２ユーザーで共にログインした状態でメッセージを連続でやり取りする等の確認をされる場合、大変恐縮ですが、送信後に、受信側でリロードをお願いします。
+  - なお、送信後に、受信側がログインして画面を開く分には特に留意点はございません。
+- テストについて、今回構築した画面に対するテストコードは用意しておりませんが、手動、目検でテスト済です。
+  - 既存のテストコードは、模擬案件１で作成したものです。これをリグレッションテストとして実行して全てpassしたことを確認しております。
+  - 今回手を入れた箇所の都合で、テストコード側の不具合も生じて微修正しています。念のためお伝えいたします。
+    
 
+（以下、模擬案件1で記載した際のままです。必要に応じてご参照ください)
 ## その他（応用要件に伴うアカウント情報やテストコードについて）
 - 応用要件について
   - 一通り実装をしております。それぞれの要件実装について解説・補足致します。
