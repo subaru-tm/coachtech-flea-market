@@ -19,7 +19,7 @@ class EmailVerificationRequest extends FormRequest
         $this->guard = $guard;
 
         if($this->unauthenticated_user == null) {
-            $user_id = $this->route('id');
+            $user_id = Auth::id();
             $user = User::find($user_id);
             Session::put('unauthenticated_user', $user);
             $this->unauthenticated_user = session()->get('unauthenticated_user');

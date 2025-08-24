@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Contracts\Auth\StatefulGuard;
+
 
 class RegisterController extends Controller
 {
@@ -34,11 +37,14 @@ class RegisterController extends Controller
     /**
      * Create a new controller instance.
      *
+     * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
      * @return void
      */
-    public function __construct()
+    public function __construct(StatefulGuard $guard)
     {
         $this->middleware('guest');
+        $this->guard = $guard;
+
     }
 
     /**
@@ -64,10 +70,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        Auth::login($user);
+
+        return $user;
     }
 }

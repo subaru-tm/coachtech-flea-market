@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Category;
+use App\Models\Dealing;
+use App\Models\ChatMessage;
 
 class Item extends Model
 {
@@ -25,6 +29,11 @@ class Item extends Model
 
     public function categories() {
         return $this->belongsToMany(Category::class, 'item_category', 'item_id', 'category_id',);
+    }
+
+    public function dealings()
+    {
+        return $this->hasMany(Dealing::class);
     }
 
     public function scopeKeywordSearch($query, $keyword) {

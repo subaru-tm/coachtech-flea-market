@@ -19,6 +19,9 @@
             <a class="header__logo" href="/">
                 <img src="{{ asset('storage/logo.svg') }}" alt="" />
             </a>
+            @if (Route::is('dealing.chat'))
+                <!-- 取引チャット画面では、検索欄、ログアウト、マイページ、出品の各メニューは表示しない -->
+            @else
             <span class="header__search">
                 <form class="search-form"
                     @if (Request::is('mylist'))
@@ -53,6 +56,7 @@
                 <a class="header__nav-link--mypage" href="/mypagesell">マイページ</a>
                 <a class="header__nav-link--sell" href="/exhibition">出品</a>
             </span>
+            @endif
         </div>
     </header>
     <main>

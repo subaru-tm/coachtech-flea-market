@@ -47,7 +47,9 @@ class ProfileGetTest extends TestCase
 
           // ユーザー名の検証。上記同様、viewのcontent-heading要素の配下の
           // content-heading__nameの存在を確認して検証する
-        $pattern = '/<div class="content-heading">\n.*?<img.*?\n.*?<div class="content-heading__name">.*?div>\n/';
+
+
+        $pattern = '/<div class="content-heading">\n.*?<img.*?\n.*?<div class="content-heading__info">.*?\n.*?<div class="content-heading__info-name">.*?div>\n/';
         preg_match_all($pattern, $responseViewContent, $matches);
         $targetResponse = $matches[0] ?? null;
   
@@ -78,7 +80,7 @@ class ProfileGetTest extends TestCase
         $this->assertNotEmpty($targetResponse);
 
           // ユーザー名の検証。
-        $pattern = '/<div class="content-heading">\n.*?<img.*?\n.*?<div class="content-heading__name">.*?div>\n/';
+        $pattern = '/<div class="content-heading">\n.*?<img.*?\n.*?<div class="content-heading__info">.*?\n.*?<div class="content-heading__info-name">.*?div>\n/';
         preg_match_all($pattern, $responseViewContent, $matches);
         $targetResponse = $matches[0] ?? null;
   

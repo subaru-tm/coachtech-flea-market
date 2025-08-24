@@ -10,6 +10,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Requests\EmailVerificationRequest;
+use App\Http\Controllers\DealingController;
+use App\Mail\MailableMailtrap;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +38,20 @@ Route::get('/register', [RegisterController::class, 'showRegistrationForm']);
 Route::post('/register', [RegisterController::class, 'register']);
 Route::patch('/mypage/profile/update', [UserController::class, 'update']);
 
+Route::get('/dealing/mail/comp', function() {
+    $name = "testname";
+    Mail::to('seller@test.com')->send(new MailableMailtrap($name));
+});
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
 Route::middleware('auth', 'verified')->group(function () {
+    Route::patch('/dealing/{dealing_id}/complete', [DealingController::class, 'complete']);
+    Route::patch('/dealing/{dealing_id}/delete', [DealingController::class, 'delete']);
+    Route::patch('/dealing/{dealing_id}/edit', [DealingController::class, 'update']);
+    Route::post('/dealing/{dealing_id}/message', [DealingController::class, 'store']);
+    Route::get('/dealing/{dealing_id}', [DealingController::class, 'chat'])->name('dealing.chat');
     Route::get('/mypage{tab}', [UserController::class, 'mypage'])->name('mypage');
     Route::get('/mypage/profile', [UserController::class, 'profile'])->name('profile.edit');
     Route::get('/exhibition', [ItemController::class, 'create']);
@@ -80,5 +96,3 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 })->middleware('auth')->name('verification.verify');
 
 // Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

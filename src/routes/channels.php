@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('dealing.Chat.{item_id}', function ($user_id, $item_id) {
+    // 認証ロジック
+    return true; // または認証ロジックを記述
+});

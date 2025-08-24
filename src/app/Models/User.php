@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Notifications\CustomVerifyEmail;
 use Laravel\Cashier\Billable;
+use App\Models\Item;
+use App\Models\Dealing;
+use App\Models\ChatMessage;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -57,5 +60,20 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new CustomVerifyEmail);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
+
+    public function dealings()
+    {
+        return $this->hasMany(Dealing::class);
+    }
+
+    public function chat_messages()
+    {
+        return $this->hasMany(ChatMessage::class);
     }
 }
