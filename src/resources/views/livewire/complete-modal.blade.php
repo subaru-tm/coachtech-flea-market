@@ -8,7 +8,7 @@
         </div>
     @endif
 
-    @if($showModal || $errors->any())
+    @if($showModal)
         <div class="modal__background">
             <div class="modal-header">
                 <p>取引が完了しました。</p>

@@ -47,9 +47,6 @@
                         <input class="input_destination" name="shipping_building" value="{{ $shipping['shipping_building'] }}" readonly />
                     @endif
                 </div>
-<!--                <div class="setting__flex">
-                    <button type="button" id="destination__setting">変更完了</button>
-                </div>  -->
             </div>
 
             <div class="input-feild__alert">

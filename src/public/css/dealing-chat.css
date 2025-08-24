@@ -119,13 +119,14 @@
 
 .message-display__mine {
     display: flex;
+    min-height: auto;
     justify-content: end;
     position: relative;
 }
 
 
 .message-display__text {
-    margin-top: 16px;
+    margin-top: 20px;
     padding: 8px 16px;
     width: 560px;
     height: 60px;
@@ -178,8 +179,8 @@
 }
 
 .message-display__attached img {
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
     position: absolute;
     top: 108px;
     right: 7;
@@ -187,15 +188,14 @@
 }
 
 .new-message {
-    position: absolute;
-    bottom: 5;
-    left: 192;
-    padding-left: 16px;
-    display: flex;
-    align-items: center;
+    margin-top: 24px;
+    position: relative;
 }
 
 .new-message__form {
+    padding-left: 16px;
+    display: flex;
+    align-items: center;
     display: flex;
     align-items: center;
 }
@@ -241,6 +241,13 @@
     cursor: pointer;
 }
 
+.input-feild__alert {
+    padding-left: 18px;
+    color: #ff5555;
+    font-size: 20px;
+    margin-right: 60px;
+}
+
 .modal__background {
     position: fixed;
     top: 50%;
@@ -251,6 +258,7 @@
     background-color: #FDFCE6;
     border: 1px solid #000000;
     border-radius: 15px;
+    z-index: 1000;
 }
 
 .modal-header {

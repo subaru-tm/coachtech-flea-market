@@ -111,20 +111,23 @@
         <form class="new-message__form" action="/dealing/{{ $dealing->id }}/message" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="text" class="new-message__text" name="message" placeholder="取引メッセージを記入してください" value="{{ old('message') }}" />
+            
             <label class="new-message__attach-label" for="file_upload">画像を追加</label>
             <input type="file" class="new-message__attach-input" name="img_file" id="file_upload" />
-            <div class="input-feild__alert">
-                @error('message')
-                    {{ $message }}
-                @enderror
-                @error('img_file')
-                    {{ $message }}
-                @enderror
-            </div>
             <button class="new-message__submit" type="submit">
                 <img src="{{ asset('storage/send-button-img.png') }}" alt="" width=60 height=44 />
             </button>
         </form>
+        <span class="input-feild__alert">
+            @error('message')
+                {{ $message }}
+            @enderror
+        </span>
+        <span class="input-feild__alert">
+            @error('img_file')
+                {{ $message }}
+            @enderror
+        </span>
     </div>
     </div>
 </div>

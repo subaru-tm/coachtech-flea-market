@@ -130,7 +130,7 @@ class UserController extends Controller
         {
 
             // if文の前に絞り込んだ取引に対して、メッセージを抽出し、作成日(降順)でソート
-            $chat_messages = ChatMessage::with('dealing')->whereIN('dealing_id', $dealings_id)->get();
+            $chat_messages = ChatMessage::with('dealing')->whereIN('dealing_id', $dealings_id)->where('user_id', '<>', $user_id)->get();
             $sorted_chat_messages = $chat_messages->sortBy([
                 ['read_at', true],      // 新着(null)が優先されるように昇順とする（新着がなくても後ろに表示する）
                 ['created_at', false],
